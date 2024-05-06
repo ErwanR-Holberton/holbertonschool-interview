@@ -1,6 +1,10 @@
 #!/usr/bin/python3
+"""
+solves lockboxes problem
+"""
 
 def open_box(index, boxes, opened_boxes):
+    """open boxes recursively"""
     opened_boxes.append(index)
     for key in boxes[index]:
         if key not in opened_boxes:
@@ -12,6 +16,7 @@ def open_box(index, boxes, opened_boxes):
 
 
 def canUnlockAll(boxes):
+    """main function called used to call the other one"""
     opened_boxes = []
     if open_box(0, boxes, opened_boxes):
         return True
