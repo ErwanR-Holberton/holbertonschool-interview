@@ -3,8 +3,11 @@
 solves lockboxes problem
 """
 
+
 def open_box(index, boxes, opened_boxes):
     """open boxes recursively"""
+    if index >= len(boxes):
+        return False
     opened_boxes.append(index)
     for key in boxes[index]:
         if key not in opened_boxes:
