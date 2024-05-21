@@ -72,14 +72,16 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
  */
 heap_t *find_parent(heap_t *root)
 {
+    int r,l;
+
     if (root == NULL)
         return (NULL);
     if (root->left == NULL && root->right == NULL)
         return root;
     if (root->right == NULL)
         return root;
-    int l = binary_tree_height(root->left);
-    int r = binary_tree_height(root->right);
+    l = binary_tree_height(root->left);
+    r = binary_tree_height(root->right);
 
     if (l == r && binary_tree_is_perfect(root->right))
         return find_parent(root->left);
