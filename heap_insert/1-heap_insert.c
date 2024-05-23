@@ -72,27 +72,27 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
  */
 heap_t *find_parent(heap_t *root)
 {
-    int r,l;
+	int r, l;
 
-    if (root == NULL)
-        return (NULL);
-    if (root->left == NULL && root->right == NULL)
-        return root;
-    if (root->right == NULL)
-        return root;
-    l = binary_tree_height(root->left);
-    r = binary_tree_height(root->right);
+	if (root == NULL)
+		return (NULL);
+	if (root->left == NULL && root->right == NULL)
+		return (root);
+	if (root->right == NULL)
+		return (root);
+	l = binary_tree_height(root->left);
+	r = binary_tree_height(root->right);
 
-    if (l == r && binary_tree_is_perfect(root->right))
-        return find_parent(root->left);
-    if (l == r && !binary_tree_is_perfect(root->right))
-        return find_parent(root->right);
-    if (l != r && !binary_tree_is_perfect(root->left))
-        return find_parent(root->left);
-    return find_parent(root->right);
+	if (l == r && binary_tree_is_perfect(root->right))
+		return (find_parent(root->left));
+	if (l == r && !binary_tree_is_perfect(root->right))
+		return (find_parent(root->right));
+	if (l != r && !binary_tree_is_perfect(root->left))
+		return (find_parent(root->left));
+	return (find_parent(root->right));
 
-    printf("%d %d", l, r);
-    return NULL;
+	printf("%d %d", l, r);
+	return (NULL);
 }
 /**
  * heap_insert - main
@@ -103,38 +103,38 @@ heap_t *find_parent(heap_t *root)
  */
 heap_t *heap_insert(heap_t **root, int value)
 {
-    heap_t *parent = find_parent(*root);
-    heap_t *node, *current;
-    int temp;
+	heap_t *parent = find_parent(*root);
+	heap_t *node, *current;
+	int temp;
 
-    node = binary_tree_node(parent, value);
-    if (parent == NULL)
-    {
-        *root = node;
-    }
-    else
-    {
-        if (parent->left == NULL)
-            parent->left = node;
-        else
-            parent->right = node;
-    }
-    current = node;
+	node = binary_tree_node(parent, value);
+	if (parent == NULL)
+	{
+		*root = node;
+	}
+	else
+	{
+		if (parent->left == NULL)
+			parent->left = node;
+		else
+			parent->right = node;
+	}
+	current = node;
 
-    while (current != NULL)
-    {
-        if (current->parent == NULL)
-            break;
-        if (current->n > current->parent->n)
-        {
-            temp = current->n;
-            current->n = current->parent->n;
-            current->parent->n = temp;
-            current = current->parent;
-        }
-        else
-            break;
-    }
+	while (current != NULL)
+	{
+		if (current->parent == NULL)
+			break;
+		if (current->n > current->parent->n)
+		{
+			temp = current->n;
+			current->n = current->parent->n;
+			current->parent->n = temp;
+			current = current->parent;
+		}
+		else
+			break;
+	}
 
-    return current;
+	return (current);
 }
