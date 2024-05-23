@@ -136,5 +136,5 @@ heap_t *heap_insert(heap_t **root, int value)
             break;
     }
 
-    return node;
+    return current;
 }
