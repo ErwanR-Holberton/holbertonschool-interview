@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 import math
+"""fuction to calculate minum operations"""
+
 
 def minOperations(n):
+    """fuction to calculate minum operations"""
     v = 1
     if v >= n:
         return 0
@@ -15,4 +18,3 @@ def minOperations(n):
         v *= 2
 
     return count
-
