@@ -4,17 +4,16 @@ import math
 
 
 def minOperations(n):
-    """fuction to calculate minum operations"""
-    v = 1
-    if v >= n:
+    if n <= 1:
         return 0
-    count = 0
-    paste = v
-    while v < n:
-        if v + paste >= n:
-            return count + 1
-        count += 2
-        paste = v
-        v *= 2
 
-    return count
+    operations = 0
+    factor = 2
+
+    while n > 1:
+        while n % factor == 0:
+            operations += factor
+            n //= factor
+        factor += 1
+
+    return operations
