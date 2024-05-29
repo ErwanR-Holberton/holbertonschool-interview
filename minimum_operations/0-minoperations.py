@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-import math
 """fuction to calculate minum operations"""
+import math
 
 
 def minOperations(n):
