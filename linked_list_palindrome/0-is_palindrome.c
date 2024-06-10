@@ -59,7 +59,7 @@ int get(listint_t **head, int index)
 int is_palindrome(listint_t **head)
 {
 	int min = 0, max = -1;
-	int arr[100];
+	int arr[2000];
 
 	while (*head != NULL)
 	{
