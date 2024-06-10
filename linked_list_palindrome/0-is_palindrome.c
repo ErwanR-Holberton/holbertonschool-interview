@@ -58,14 +58,19 @@ int get(listint_t **head, int index)
  */
 int is_palindrome(listint_t **head)
 {
-	int min = 0, max = len(head) - 1;
+	int min = 0, max = -1;
+	int arr[100];
 
-	if (max == -1)
-		return (0);
+	while (*head != NULL)
+	{
+		arr[max + 1] = (*head)->n;
+		*head = (*head)->next;
+		max++;
+	}
 
 	while (max > min)
 	{
-		if (get(head, min) != get(head, max))
+		if (arr[min] != arr[max])
 			return (0);
 		min++;
 		max--;
