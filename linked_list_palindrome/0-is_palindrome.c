@@ -1,16 +1,23 @@
 #include "lists.h"
-#include <stdio.h>
 
-listint_t *reverse(listint_t *head) {
+
+/**
+ * reverse - it in the name
+ * @head: pointer to list
+ * Return: the end of the list wich is now the start
+ */
+listint_t *reverse(listint_t *head)
+{
 	listint_t *prev = NULL, *current = head, *next = NULL;
 
-	while (current != NULL) {
+	while (current != NULL)
+	{
 		next = current->next;
 		current->next = prev;
 		prev = current;
 		current = next;
 	}
-	return prev;
+	return (prev);
 }
 
 /**
@@ -21,6 +28,7 @@ listint_t *reverse(listint_t *head) {
 int is_palindrome(listint_t **head)
 {
 	listint_t *slow = *head, *fast = *head, *prev = NULL, *end;
+	listint_t *copy_head = *head, *copy_end;
 	int result = 1;
 
 	while (fast != NULL)
@@ -28,14 +36,14 @@ int is_palindrome(listint_t **head)
 		prev = slow;
 		slow = slow->next;
 		fast = fast->next;
-		if (fast!= NULL)
+		if (fast != NULL)
 			fast = fast->next;
 	}
 
 	prev->next = NULL;
 	end = reverse(slow);
 
-	listint_t *copy_head = *head, *copy_end = end;
+	copy_end = end;
 
 	while (copy_end != NULL)
 	{
