@@ -1,52 +1,16 @@
 #include "lists.h"
 #include <stdio.h>
 
-/**
- * len - gets lenght
- * @head: pointer to list
- * Return: lenght
- */
-int len(listint_t **head)
-{
-	listint_t *current;
-	int count = 0;
+listint_t *reverse(listint_t *head) {
+	listint_t *prev = NULL, *current = head, *next = NULL;
 
-	current = *head;
-
-	if (*head != NULL)
-	{
-		while (current != NULL)
-		{
-			current = current->next;
-			count++;
-		}
+	while (current != NULL) {
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
 	}
-	return (count);
-}
-
-/**
- * get - get a value
- * @head: pointer to list
- * @index: index
- * Return: value at index
- */
-listint_t *get(listint_t *head, int index)
-{
-	listint_t *current;
-	int count = 0;
-
-	current = head;
-
-	while (count < index)
-	{
-		if (current == NULL)
-			return (NULL);
-		current = current->next;
-		count++;
-	}
-	if (current == NULL)
-		return (NULL);
-	return (current);
+	return prev;
 }
 
 /**
@@ -56,18 +20,36 @@ listint_t *get(listint_t *head, int index)
  */
 int is_palindrome(listint_t **head)
 {
-	int min = 0, lenght = len(head), max;
-	listint_t *current = *head, *mid = get(*head, lenght / 2);
+	listint_t *slow = *head, *fast = *head, *prev = NULL, *end;
+	int result = 1;
 
-	max = lenght - 1;
-
-	while (max > min)
+	while (fast != NULL)
 	{
-		if (current->n != get(mid, lenght - (lenght / 2) - 1 - min)->n)
-			return 0;
-		current = current->next;
-		min++;
-		max --;
+		prev = slow;
+		slow = slow->next;
+		fast = fast->next;
+		if (fast!= NULL)
+			fast = fast->next;
 	}
-	return (1);
+
+	prev->next = NULL;
+	end = reverse(slow);
+
+	listint_t *copy_head = *head, *copy_end = end;
+
+	while (copy_end != NULL)
+	{
+		if (copy_head->n != copy_end->n)
+		{
+			result = 0;
+			break;
+		}
+		copy_head = copy_head->next;
+		copy_end = copy_end->next;
+	}
+
+	end = reverse(end);
+	prev->next = end;
+
+	return (result);
 }
