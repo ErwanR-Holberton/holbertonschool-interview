@@ -1,4 +1,5 @@
 #include "lists.h"
+#include <stdio.h>
 
 
 /**
@@ -30,6 +31,9 @@ int is_palindrome(listint_t **head)
 	listint_t *slow = *head, *fast = *head, *prev = NULL, *end;
 	listint_t *copy_head = *head, *copy_end;
 	int result = 1;
+
+	if (*head == NULL || (*head)->next == NULL)
+		return (1);
 
 	while (fast != NULL)
 	{
