@@ -14,10 +14,10 @@ total_size = 0
 def print_stats():
 
     print("File size:", total_size)
-    for code, amount in status_codes.items():
-        if amount != 0:
+    for code in sorted(status_codes.keys()):
+        if status_codes[code] != 0:
             print(code, end="")
-            print(":", amount)
+            print(":", status_codes[code])
 
 
 for line in lines:
