@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+log parsing
+"""
 import sys
 
 input_data = sys.stdin.read()
