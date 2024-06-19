@@ -11,6 +11,7 @@ count = 0
 status_codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 total_size = 0
 
+
 def print_stats():
 
     print("File size:", total_size)
@@ -23,6 +24,8 @@ def print_stats():
 for line in lines:
 
     slip = line.split(" ")
+    if len(slip) != 9:
+        continue
     total_size += int(slip[8])
 
     if int(slip[7]) in status_codes:
@@ -30,7 +33,7 @@ for line in lines:
 
     count += 1
 
-    if count %10 == 0:
+    if count % 10 == 0:
         print_stats()
 
 print_stats()
