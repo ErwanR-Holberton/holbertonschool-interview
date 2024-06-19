@@ -15,8 +15,9 @@ def print_stats():
 
     print("File size:", total_size)
     for code, amount in status_codes.items():
-        print(code, end="")
-        print(":", amount)
+        if amount != 0:
+            print(code, end="")
+            print(":", amount)
 
 
 for line in lines:
