@@ -22,18 +22,18 @@ def print_stats():
 
 
 for line in lines:
+    try:
+        slip = line.split(" ")
+        total_size += int(slip[8])
 
-    slip = line.split(" ")
-    if len(slip) != 9:
+        if int(slip[7]) in status_codes:
+            status_codes[int(slip[7])] += 1
+
+        count += 1
+
+        if count % 10 == 0:
+            print_stats()
+    except:
         continue
-    total_size += int(slip[8])
-
-    if int(slip[7]) in status_codes:
-        status_codes[int(slip[7])] += 1
-
-    count += 1
-
-    if count % 10 == 0:
-        print_stats()
 
 print_stats()
