@@ -20,20 +20,19 @@ def print_stats():
             print(code, end="")
             print(":", status_codes[code])
 
-
 for line in lines:
     try:
         slip = line.split(" ")
-        total_size += int(slip[8])
+        total_size += int(slip[-1])
 
-        if int(slip[7]) in status_codes:
-            status_codes[int(slip[7])] += 1
+        if int(slip[-2]) in status_codes:
+            status_codes[int(slip[-2])] += 1
 
         count += 1
 
         if count % 10 == 0:
             print_stats()
-    except:
+    except Exception as e:
         continue
 
 print_stats()
