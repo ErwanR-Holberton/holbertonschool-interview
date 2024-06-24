@@ -15,6 +15,8 @@ int check_cycle(listint_t *list)
 		copy2 = copy2->next;
 		if (copy != NULL)
 			copy = copy->next;
+		else
+			return (0);
 		if (copy == copy2)
 			return (1);
 	}
