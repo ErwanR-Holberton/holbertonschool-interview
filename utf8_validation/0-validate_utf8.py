@@ -20,4 +20,7 @@ def validUTF8(data):
             if not 128 <= first <= 191:
                 return False
 
+    if bytes_to_read != 0:
+        return False
+
     return True
