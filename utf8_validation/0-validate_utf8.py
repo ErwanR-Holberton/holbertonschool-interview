@@ -12,6 +12,8 @@ def validUTF8(data):
         first = number % 255
 
         if bytes_to_read == 0:
+            if first > 247:
+                return False
             for i in range(len(boundaries)):
                 if boundaries[i][0] <= first <= boundaries[i][1]:
                     bytes_to_read = i
