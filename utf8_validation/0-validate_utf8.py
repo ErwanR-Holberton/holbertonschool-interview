@@ -3,24 +3,21 @@
 validate utf8
 """
 
+
 def validUTF8(data):
     """validate utf8"""
     boundaries = [[0, 127], [192, 223], [224, 239], [240, 247]]
+    bytes_to_read = 0
     for number in data:
-        bytes = [(number // (2**24)) % 255, (number // (2**16)) % 255, (number // (2**8)) % 255, number % 255]
-        while len(bytes) > 1 and bytes[0] == 0:
-            bytes.pop(0)
+        first = number % 255
 
-        length = len(bytes)
-        if length > 4:
-            return False
-
-        first = bytes.pop(0)
-        if boundaries[length - 1][0] > first or first > boundaries[length - 1][1]:
-            return False
-        if length == 1:
-            continue
-        if not all(128 <= num <= 191 for num in bytes):
-            return False
+        if bytes_to_read == 0:
+            for i in range(len(boundaries)):
+                if boundaries[i][0] <= first <= boundaries[i][1]:
+                    bytes_to_read = i
+        else:
+            bytes_to_read -= 1
+            if not 128 <= first <= 191:
+                return False
 
     return True
