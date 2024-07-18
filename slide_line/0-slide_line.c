@@ -11,7 +11,7 @@
  */
 int slide_line(int *line, size_t size, int direction)
 {
-	int start, end, increment, last;
+	int start, end, increment, last, i;
 
 	if (direction == SLIDE_LEFT)
 		start = 0, end = size - 1, increment = 1;
@@ -21,7 +21,7 @@ int slide_line(int *line, size_t size, int direction)
 		return (0);
 
 	last = start;
-	for (int i = start + increment; i != end + increment; i += increment)
+	for (i = start + increment; i != end + increment; i += increment)
 	{
 		if (line[i] == 0)
 			continue;
