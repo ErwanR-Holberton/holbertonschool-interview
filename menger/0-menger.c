@@ -54,4 +54,5 @@ void menger(int level)
 			putchar(array[i * size + j]);
 		putchar('\n');
 	}
+	free(array);
 }
