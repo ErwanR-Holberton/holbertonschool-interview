@@ -2,7 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char* recursive(int level)
+
+/**
+ * recursive - compute levels of sponge recursively
+ * @level: level of sponge
+ * Return: array representing this lvl of sponge
+ */
+char *recursive(int level)
 {
 	int i, j, k, l, size = pow(3, level), s_size = size / 3;
 	char *small, *big;
@@ -11,7 +17,7 @@ char* recursive(int level)
 	{
 		small = malloc(size * size);
 		small[0] = '#';
-		return small;
+		return (small);
 	}
 	else
 		small = recursive(level - 1);
@@ -35,9 +41,13 @@ char* recursive(int level)
 		}
 	}
 	free(small);
-	return big;
+	return (big);
 }
 
+/**
+ * menger - print menger sponge
+ * @level: level of sponge
+ */
 void menger(int level)
 {
 	int i, j, size = pow(3, level);
