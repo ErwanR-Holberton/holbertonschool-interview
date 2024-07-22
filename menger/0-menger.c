@@ -4,7 +4,6 @@
 
 char* recursive(int level)
 {
-	printf("%d\n", level);
 	int i, j, k, l, size = pow(3, level), s_size = size / 3;
 	char *small, *big;
 
@@ -47,9 +46,7 @@ void menger(int level)
 	if (level < 0)
 		return;
 
-	printf("test\n");
 	array = recursive(level);
-	printf("test2\n");
 
 	for (i = 0; i < size; i++)
 	{
