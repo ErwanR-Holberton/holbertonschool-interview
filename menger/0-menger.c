@@ -5,7 +5,7 @@
 char* recursive(int level)
 {
 	printf("%d\n", level);
-	int i, j, k, div, size = pow(3, level), s_size = size / 3;
+	int i, j, k, l, size = pow(3, level), s_size = size / 3;
 	char *small, *big;
 
 	if (size == 1)
@@ -18,17 +18,20 @@ char* recursive(int level)
 		small = recursive(level - 1);
 
 	big = malloc(size * size);
-	div = s_size / 3;
-	for (i = 0; i < s_size; i++)
+
+	for (k = 0; k < 3; k++)
 	{
-		for (j = 0; j < s_size; j++)
+		for (l = 0; l < 3; l++)
 		{
-			for (k = 0; k < 3; k++)
+			for (i = 0; i < s_size; i++)
 			{
-				if (j / div == 1 && i / div == 1)
-					big[i * size + j * s_size + k] = ' ';
-				else
-					big[i * size + j * s_size + k] = small[i * s_size + j];
+				for (j = 0; j < s_size; j++)
+				{
+					if (k == 1 && l == 1)
+						big[(k * s_size + i) * size + l * s_size + j] = ' ';
+					else
+						big[(k * s_size + i) * size + l * s_size + j] = small[i * s_size + j];
+				}
 			}
 		}
 	}
@@ -44,7 +47,9 @@ void menger(int level)
 	if (level < 0)
 		return;
 
+	printf("test\n");
 	array = recursive(level);
+	printf("test2\n");
 
 	for (i = 0; i < size; i++)
 	{
