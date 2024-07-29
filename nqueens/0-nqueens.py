@@ -1,13 +1,17 @@
 #!/usr/bin/python3
 from sys import argv
+
+
 def check_this_queen(qx, qy, queens):
     for x, y in queens:
         if x == qx or y == qy or abs(qx - x) == abs(qy - y):
             return False
     return True
 
+
 def recursive_place_queen(n, level, queens, last_queen=[0, -1]):
     start = last_queen[1] + 1
+    global count
     for i in range(last_queen[0], n):
         for j in range(start, n):
             if check_this_queen(i, j, queens):
@@ -22,9 +26,10 @@ def recursive_place_queen(n, level, queens, last_queen=[0, -1]):
 
 if len(argv) != 2:
     print("Usage: nqueens N")
+    exit(1)
 try:
     n = int(argv[1])
-except:
+except Exception:
     print("N must be a number")
     exit(1)
 if n < 4:
