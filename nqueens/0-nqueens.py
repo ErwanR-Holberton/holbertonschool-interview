@@ -8,6 +8,7 @@ def check_this_queen(qx, qy, queens):
             return False
     return True
 
+
 def recursive_place_queen(n, level, queens, last_queen=[0, -1]):
     i = level - 1
     for j in range(n):
