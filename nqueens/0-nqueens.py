@@ -8,19 +8,16 @@ def check_this_queen(qx, qy, queens):
             return False
     return True
 
-
 def recursive_place_queen(n, level, queens, last_queen=[0, -1]):
-    start = last_queen[1] + 1
-    global count
-    for i in range(last_queen[0], n):
-        for j in range(start, n):
-            if check_this_queen(i, j, queens):
-                queens.append([i, j])
-                if (level == n):
-                    print(queens)
-                else:
-                    recursive_place_queen(n, level + 1, queens, [i, j])
-                queens.pop()
+    i = level - 1
+    for j in range(n):
+        if check_this_queen(i, j, queens):
+            queens.append([i, j])
+            if (level == n):
+                print(queens)
+            else:
+                recursive_place_queen(n, level + 1, queens, [i, j])
+            queens.pop()
         start = 0
 
 
