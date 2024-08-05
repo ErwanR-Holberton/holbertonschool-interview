@@ -44,7 +44,7 @@ void avl_left(int left, int right, binary_tree_t *parent, int *array, int size)
 {
 	int center = (right - left) / 2 + left;
 
-	if (center == 0)
+	if (center == 0 && left != right)
 		parent->left = binary_tree_node(parent, array[center]);
 	if (center == left)
 		return;
@@ -94,11 +94,11 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
 	avl_t *tree;
 
 	if (!array)
-		return NULL;
+		return (NULL);
 
 	tree = binary_tree_node(NULL, array[center]);
 	if (!tree)
-		return NULL;
+		return (NULL);
 
 	avl_left(0, center, tree, array, size);
 	avl_right(center, size, tree, array, size);
