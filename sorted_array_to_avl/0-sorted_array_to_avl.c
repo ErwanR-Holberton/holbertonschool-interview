@@ -87,8 +87,6 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
 {
 	int center = size / 2;
 
-	printf("%d\n", center);
-
 	avl_t *tree = binary_tree_node(NULL, array[center]);
 
 	avl_left(0, center, tree, array, size);
