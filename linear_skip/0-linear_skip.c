@@ -50,10 +50,10 @@ skiplist_t *linear_skip(skiplist_t *list, int value)
 		if (current->express->n < value)
 			current = current->express;
 		else
-			return (search(current, current->express->n, value));
+			return (search(current, current->express->index, value));
 	}
 	current2 = current;
 	while (current2->next != NULL)
 		current2 = current2->next;
-	return (search(current, current2->n, value));
+	return (search(current, current2->index, value));
 }
