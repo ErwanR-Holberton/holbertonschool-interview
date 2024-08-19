@@ -1,5 +1,4 @@
-const { Console } = require('console');
-const { exit } = require('process');
+#!/usr/bin/node
 const request = require('request');
 
 if (process.argv[2] == undefined)
