@@ -7,41 +7,41 @@ if (process.argv[2] == undefined)
 	exit();
 }
 
-async function log_name(url) {
-
-	const options = {
-		url: url,
-		method: 'GET',
-		headers: { 'Content-Type': 'application/json' }
-	};
-
-	request(options, (error, response, body) => {
-		if (error) { console.error('Error making request:', error); return; }
-
-		if (response.statusCode === 200) {
-
-		console.log(JSON.parse(body).name);
-
-		} else { console.error('Failed request. Status code:', response.statusCode); }
+function requestPromise(url) {
+	return new Promise((resolve, reject) => {
+		request(url, { json: true }, (error, response, body) => {
+			if (error) {
+				reject(error);
+			} else if (response.statusCode !== 200) {
+				reject(new Error(`Failed request. Status code: ${response.statusCode}`));
+			} else {
+				resolve(body);
+			}
+		});
 	});
 }
 
+async function log_name(url) {
+	try {
+		const data = await requestPromise(url);
+		console.log(data.name);
+	} catch (error) {
+		console.error('Error fetching character:', error.message);
+	}
+}
 
-const options = {
-	url: "https://swapi-api.hbtn.io/api/films/" + process.argv[2],
-	method: 'GET',
-	headers: { 'Content-Type': 'application/json' }
-};
+async function getCharacters() {
+	try {
+		const filmData = await requestPromise("https://swapi-api.hbtn.io/api/films/" + process.argv[2]);
+		const characterUrls = filmData.characters;
 
-request(options, (error, response, body) => {
-  if (error) { console.error('Error making request:', error); return; }
+		for (const url of characterUrls) {
+			await log_name(url);
+		}
+	} catch (error) {
+		console.error('Failed request:', error.message);
+	}
+}
 
-  if (response.statusCode === 200) {
 
-	JSON.parse(body)["characters"].forEach(element => {
-		options.url = element;
-		log_name(element);
-	});;
-
-  } else { console.error('Failed request. Status code:', response.statusCode); }
-});
+getCharacters();
