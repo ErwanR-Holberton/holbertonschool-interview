@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-
+"""
+compute the rain
+"""
 def rain(walls):
     if not walls:
         return 0
