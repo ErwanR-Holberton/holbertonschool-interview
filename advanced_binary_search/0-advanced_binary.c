@@ -1,4 +1,3 @@
-
 #include "search_algos.h"
 
 /**
@@ -11,16 +10,16 @@
  */
 void print_array(int *array, size_t size)
 {
-    size_t i;
+	size_t i;
 
-    printf("Searching in array: ");
-    for (i = 0; i < size; i++)
-    {
-        if (i != 0)
-            printf(", ");
-        printf("%d", array[i]);
-    }
-    printf("\n");
+	printf("Searching in array: ");
+	for (i = 0; i < size; i++)
+	{
+		if (i != 0)
+			printf(", ");
+		printf("%d", array[i]);
+	}
+	printf("\n");
 }
 
 /**
@@ -38,23 +37,23 @@ void print_array(int *array, size_t size)
  */
 int advanced_binary(int *array, size_t size, int value)
 {
-    size_t m;
+	size_t m;
 
-    if (size == 0)
-        return (-1);
+	if (size == 0)
+		return (-1);
 
-    m = (size - 1) / 2;
-    print_array(array, size);
+	m = (size - 1) / 2;
+	print_array(array, size);
 
-    if (array[m] == value && (m == 0 || array[m - 1] != value))
-        return ((int)m);
+	if (array[m] == value && (m == 0 || array[m - 1] != value))
+		return ((int)m);
 
-    if (array[m] >= value)
-        return (advanced_binary(array, m + 1, value));
+	if (array[m] >= value)
+		return (advanced_binary(array, m + 1, value));
 
-    int result = advanced_binary(array + m + 1, size - m - 1, value);
-    if (result == -1)
-        return (-1);
-    else
-        return ((int)m + 1 + result);
+	int result = advanced_binary(array + m + 1, size - m - 1, value);
+	if (result == -1)
+		return (-1);
+	else
+		return ((int)m + 1 + result);
 }
