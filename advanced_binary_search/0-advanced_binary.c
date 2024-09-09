@@ -1,6 +1,14 @@
 
 #include "search_algos.h"
 
+/**
+ * print_array - Prints the elements of an array
+ * @array: Pointer to the first element of the array
+ * @size: Number of elements in the array
+ *
+ * This function prints the elements of the array in a format
+ * "element1, element2, ..., elementN".
+ */
 void print_array(int *array, size_t size)
 {
     size_t i;
@@ -15,35 +23,38 @@ void print_array(int *array, size_t size)
     printf("\n");
 }
 
+/**
+ * advanced_binary - Performs an advanced binary search on a sorted array
+ * @array: Pointer to the first element of the array
+ * @size: Number of elements in the array
+ * @value: The value to search for
+ *
+ * Return: The index of the first occurrence of the value in the array,
+ * or -1 if the value is not present.
+ *
+ * This function searches for the first occurrence of a value in a sorted array
+ * using the binary search algorithm. It prints the portion of the array that
+ * is being searched at each step.
+ */
 int advanced_binary(int *array, size_t size, int value)
 {
-    int res, mid;
+    size_t L = 0;
+    size_t R = size - 1;
 
-    if (array == NULL || size == 0)
-        return -1;
-
-    if (size > 1)
-        print_array(array, size);
-
-    if (size == 1)
+    while (L <= R)
     {
-        if (array[0] == value)
-            return 0;
+        size_t m = L + (R - L) / 2;
+
+        print_array(array + L, R - L + 1);
+
+        if (array[m] < value)
+            L = m + 1;
         else
-            return -1;
+        {
+            R = m;
+            if (array[m] == value && (m == 0 || array[m - 1] != value))
+                return ((int)m);
+        }
     }
-
-    mid = (size - 1) / 2;
-
-    if (array[mid] >= value)
-    {
-        return advanced_binary(array, mid + 1, value);
-    }
-    else
-    {
-        res = advanced_binary(array + mid + 1, size - mid - 1, value);
-        if (res == -1)
-            return -1;
-        return res + mid + 1;
-    }
+    return (-1);
 }
