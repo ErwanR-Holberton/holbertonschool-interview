@@ -38,23 +38,23 @@ void print_array(int *array, size_t size)
  */
 int advanced_binary(int *array, size_t size, int value)
 {
-    size_t L = 0;
-    size_t R = size - 1;
+    size_t m;
 
-    while (L <= R)
-    {
-        size_t m = L + (R - L) / 2;
+    if (size == 0)
+        return (-1);
 
-        print_array(array + L, R - L + 1);
+    m = (size - 1) / 2;
+    print_array(array, size);
 
-        if (array[m] < value)
-            L = m + 1;
-        else
-        {
-            R = m;
-            if (array[m] == value && (m == 0 || array[m - 1] != value))
-                return ((int)m);
-        }
-    }
-    return (-1);
+    if (array[m] == value && (m == 0 || array[m - 1] != value))
+        return ((int)m);
+
+    if (array[m] >= value)
+        return (advanced_binary(array, m + 1, value));
+
+    int result = advanced_binary(array + m + 1, size - m - 1, value);
+    if (result == -1)
+        return (-1);
+    else
+        return ((int)m + 1 + result);
 }
