@@ -38,6 +38,7 @@ void print_array(int *array, size_t size)
 int advanced_binary(int *array, size_t size, int value)
 {
 	size_t m;
+	int result;
 
 	if (size == 0)
 		return (-1);
@@ -51,7 +52,8 @@ int advanced_binary(int *array, size_t size, int value)
 	if (array[m] >= value)
 		return (advanced_binary(array, m + 1, value));
 
-	int result = advanced_binary(array + m + 1, size - m - 1, value);
+	result = advanced_binary(array + m + 1, size - m - 1, value);
+
 	if (result == -1)
 		return (-1);
 	else
