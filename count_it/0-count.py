@@ -35,7 +35,7 @@ def count_words(subreddit, word_list, after=None, word_count=defaultdict(int)):
     response = requests.get("https://www.reddit.com/r/{}/hot.json".format(subreddit), headers=headers, params=params)
     data = response.json()
     posts = data['data']['children']
-    word_list = [word.lower() for word in word_list]
+    word_list = list(map(str.lower, word_list))
 
     recursive_for(posts, word_list, word_count)
 
