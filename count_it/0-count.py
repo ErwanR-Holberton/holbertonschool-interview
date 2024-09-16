@@ -18,26 +18,26 @@ def count_recursive(word_count, word_list, words_in_title):
     word_count[word_list[0]] += words_in_title.count(word_list[0])
     count_recursive(word_count, word_list[1:], words_in_title)
 
-def recursive_for(posts, word_list, word_count):
+def recursive_post(posts, word_list, word_count):
     if not posts:
         return
     post = posts[0]
     title = post['data']['title'].lower()
     words_in_title = title.split()
     count_recursive(word_count, word_list, words_in_title)
-    recursive_for(posts[1:], word_list, word_count)
+    recursive_post(posts[1:], word_list, word_count)
     
 
 
 headers = {'User-Agent': 'toto'} 
 def count_words(subreddit, word_list, after=None, word_count=defaultdict(int)):
     params = {'limit': 100, 'after': after}
-    response = requests.get("https://www.reddit.com/r/{}/hot.json".format(subreddit), headers=headers, params=params)
+    response = requests.get(f"https://www.reddit.com/r/{subreddit}/hot.json", headers=headers, params=params)
     data = response.json()
     posts = data['data']['children']
     word_list = list(map(str.lower, word_list))
 
-    recursive_for(posts, word_list, word_count)
+    recursive_post(posts, word_list, word_count)
 
     after = data['data'].get('after')
     if after:
