@@ -2,8 +2,8 @@
 """
 count
 """
-import requests
 from collections import defaultdict
+import requests
 
 headers = {'User-Agent': 'toto'} 
 def count_words(subreddit, word_list, after=None, word_count=defaultdict(int)):
