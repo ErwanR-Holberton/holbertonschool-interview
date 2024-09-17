@@ -8,7 +8,7 @@ def print_list_recursive(lst):
     if not lst:
         return
     if lst[0][1] > 0:
-        print(f"{lst[0][0]}: {lst[0][1]}")
+        print("{}: {}".format(lst[0][0], lst[0][1]))
     print_list_recursive(lst[1:])
 
 def count_recursive(word_count, word_list, words_in_title):
