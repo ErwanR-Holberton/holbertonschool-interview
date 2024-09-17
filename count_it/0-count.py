@@ -1,47 +1,52 @@
 #!/usr/bin/python3
 """
-count
+count_words
 """
 import requests
 
-def print_list_recursive(lst):
-    if not lst:
-        return
-    if lst[0][1] > 0:
-        print("{}: {}".format(lst[0][0], lst[0][1]))
-    print_list_recursive(lst[1:])
 
-def count_recursive(word_count, word_list, words_in_title):
-    if not word_list:
-        return
-    word_count[word_list[0]] = word_count.get(word_list[0], 0) + words_in_title.count(word_list[0])
-    count_recursive(word_count, word_list[1:], words_in_title)
-
-def recursive_post(posts, word_list, word_count):
-    if not posts:
-        return
-    post = posts[0]
-    title = post['data']['title'].lower()
-    words_in_title = title.split()
-    count_recursive(word_count, word_list, words_in_title)
-    recursive_post(posts[1:], word_list, word_count)
-    
-
-
-headers = {'User-Agent': 'toto'} 
 def count_words(subreddit, word_list, after=None, word_count={}):
-    params = {'limit': 100, 'after': after}
-    response = requests.get("https://www.reddit.com/r/{}/hot.json".format(subreddit), headers=headers, params=params)
+    headers = {'User-Agent': 'Reddit API script'}
+
+    # Fetch data from Reddit API
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
+    params = {'limit': 100, 'after': after}  # Pagination using 'after'
+    response = requests.get(
+        url, headers=headers, params=params, allow_redirects=False
+        )
+
+    if response.status_code != 200:
+        return
+
     data = response.json()
-    posts = data['data']['children']
-    word_list = list(map(str.lower, word_list))
+    # Extract titles from the response
+    titles = [post['data']['title'] for post in data['data']['children']]
 
-    recursive_post(posts, word_list, word_count)
+    # Normalize the word_list (case insensitive) and prepare for counting
+    word_list = [word.lower() for word in word_list]
 
-    after = data['data'].get('after')
+    # Count occurrences of words in titles
+    for title in titles:
+        words = title.lower().split()
+        for word in word_list:
+            word_count[word] = word_count.get(word, 0) + words.count(word)
+
+    after = data['data']['after']
     if after:
-        count_words(subreddit, word_list, after=after, word_count=word_count)
-    else:
-        print_list_recursive(sorted(word_count.items(), key=lambda item: (-item[1], item[0])))
-    return word_count
-    
+        count_words(subreddit, word_list, after, word_count)
+
+    # If we're at the last page, sort and print the results
+    if after is None:
+        # Filter out words with 0 occurrences
+        filtered_word_count = {
+            word: count for word, count in word_count.items() if count > 0
+            }
+
+        # Sort by count (descending), then by word (alphabetically)
+        sorted_word_count = sorted(
+            filtered_word_count.items(), key=lambda item: (-item[1], item[0])
+            )
+
+        # Print results
+        for word, count in sorted_word_count:
+            print(f"{word}: {count}")
