@@ -2,7 +2,6 @@
 """
 count
 """
-from collections import defaultdict
 import requests
 
 def print_list_recursive(lst):
@@ -15,7 +14,7 @@ def print_list_recursive(lst):
 def count_recursive(word_count, word_list, words_in_title):
     if not word_list:
         return
-    word_count[word_list[0]] += words_in_title.count(word_list[0])
+    word_count[word_list[0]] = word_count.get(word_list[0], 0) + words_in_title.count(word_list[0])
     count_recursive(word_count, word_list[1:], words_in_title)
 
 def recursive_post(posts, word_list, word_count):
@@ -30,9 +29,9 @@ def recursive_post(posts, word_list, word_count):
 
 
 headers = {'User-Agent': 'toto'} 
-def count_words(subreddit, word_list, after=None, word_count=defaultdict(int)):
+def count_words(subreddit, word_list, after=None, word_count={}):
     params = {'limit': 100, 'after': after}
-    response = requests.get(f"https://www.reddit.com/r/{subreddit}/hot.json", headers=headers, params=params)
+    response = requests.get("https://www.reddit.com/r/{}/hot.json".format(subreddit), headers=headers, params=params)
     data = response.json()
     posts = data['data']['children']
     word_list = list(map(str.lower, word_list))
