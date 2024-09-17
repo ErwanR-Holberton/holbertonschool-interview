@@ -1,27 +1,39 @@
 #!/usr/bin/python3
 """
-count
+0-count
 """
-import requests
+import requests as req
 
-def count_words(subreddit, word_list, after=None, word_count={}):
-    headers = {'User-Agent': 'toto'} 
-    params = {'limit': 100, 'after': after}
-    response = requests.get("https://www.reddit.com/r/{}/hot.json".format(subreddit), headers=headers, params=params)
-    data = response.json()
-    posts = data['data']['children']
-    word_list = [word.lower() for word in word_list]
-    for post in posts:
-        title = post['data']['title'].lower()
-        words_in_title = title.split()
 
+def count_words(subreddit, word_list, occurences=None, after=''):
+    """Count the occurences of each word
+    in the title of all hot article of a subreddit
+    """
+
+    if occurences is None:
+        word_list = [w.lower() for w in word_list]
+        occurences = dict.fromkeys(set(word_list), 0)
+
+    headers = {'User-agent': 'python:count_it:v0.1 (by u/judgedead53)'}
+    r = req.get('https://www.reddit.com/r/{}/hot.json?after={}&limit=100'
+                .format(subreddit, after), headers=headers)
+
+    if r.status_code != 200:
+        return
+
+    data = r.json()['data']
+    for data_entry in data['children']:
+        title = data_entry['data']['title'].lower()
+        title_words = title.split(' ')
         for word in word_list:
-            word_count[word] =  word_count.get(word, 0) + words_in_title.count(word)
-    after = data['data'].get('after')
-    if after:
-        count_words(subreddit, word_list, after=after, word_count=word_count)
+            occurences[word] += title_words.count(word.lower())
+
+    if 'after' in data and data['after'] is not None:
+        count_words(subreddit, word_list, occurences, data['after'])
     else:
-        for word, count in sorted(word_count.items(), key=lambda item: (-item[1], item[0])):
-            if count > 0:
-                print(f"{word}: {count}")
-    return word_count
+        sorted_items = sorted(occurences.items(),
+                              key=lambda item: (-item[1], item[0]))
+        for (k, v) in sorted_items:
+            if v <= 0:
+                continue
+            print('{}: {}'.format(k, v))
