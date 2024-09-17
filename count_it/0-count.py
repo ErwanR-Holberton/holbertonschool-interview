@@ -8,9 +8,7 @@ def count_words(subreddit, word_list, after=None, word_count={}):
     headers = {'User-Agent': 'toto'} 
     params = {'limit': 100, 'after': after}
     response = requests.get("https://www.reddit.com/r/{}/hot.json".format(subreddit), headers=headers, params=params)
-    
-    if response.status_code != 200:
-        return
+
     
     data = response.json()
     posts = data['data']['children']
@@ -28,4 +26,3 @@ def count_words(subreddit, word_list, after=None, word_count={}):
         for word, count in sorted(word_count.items(), key=lambda item: (-item[1], item[0])):
             if count > 0:
                 print(f"{word}: {count}")
-    return word_count
