@@ -2,72 +2,107 @@
 #include <stdio.h>
 #include "binary_trees.h"
 
-
 /**
- * binary_tree_height - function that goes through the tree and mesure height
- * @tree: tree to loop through
- *
- * Return: nothing
+ * swap - Swaps the values of two heap nodes.
+ * @a: First node.
+ * @b: Second node.
  */
-size_t binary_tree_height(const binary_tree_t *tree)
+void swap(heap_t *a, heap_t *b)
 {
-	int height = 0, height2 = 0;
-
-	if (tree == NULL)
-		return (0);
-
-	height = binary_tree_height(tree->left);
-	height2 = binary_tree_height(tree->right);
-
-	if (height > height2)
-		return (height + 1);
-	else
-		return (height2 + 1);
+    int temp = a->n;
+    a->n = b->n;
+    b->n = temp;
 }
 
 /**
- * heap_extract - remove node root an keep the tree perfect
- * @root: root of the tree
+ * findLastNode - Finds the last node in a heap (level-order).
+ * @root: Root of the tree.
  *
- * Return: value to return
+ * Return: Pointer to the last node.
+ */
+heap_t *findLastNode(heap_t *root)
+{
+    heap_t *queue[100], *lastNode = NULL, *current;
+    int front = 0, rear = 0;
+
+    if (!root)
+        return (NULL);
+
+    queue[rear++] = root;
+
+    while (front < rear)
+    {
+        current = queue[front++];
+        lastNode = current;
+
+        if (current->left)
+            queue[rear++] = current->left;
+        if (current->right)
+            queue[rear++] = current->right;
+    }
+    return (lastNode);
+}
+
+/**
+ * heapifyDown - Restores max-heap property by sifting down a node.
+ * @node: Node to heapify down from.
+ */
+void heapifyDown(heap_t *node)
+{
+    heap_t *largest = node;
+
+    if (!node)
+        return;
+
+    if (node->left && node->left->n > largest->n)
+        largest = node->left;
+
+    if (node->right && node->right->n > largest->n)
+        largest = node->right;
+
+    if (largest != node)
+    {
+        swap(node, largest);
+        heapifyDown(largest);
+    }
+}
+
+/**
+ * heap_extract - Extracts the root node of a max binary heap.
+ * @root: Double pointer to the root of the heap.
+ *
+ * Return: Value of the extracted node, or 0 if failed.
  */
 int heap_extract(heap_t **root)
 {
-    int left = 0, right = 0;
-    heap_t *l, *r, *node;
+    int maxValue;
+    heap_t *lastNode;
 
-    if (root == NULL)
-        return 0;
+    if (!(*root))
+        return (0);
 
-    if ((*root)->left == NULL && (*root)->right == NULL)
+    lastNode = findLastNode(*root);
+    if (!lastNode)
+        return (0);
+
+    maxValue = (*root)->n;
+
+    if (*root == lastNode)
     {
-        if ((*root)->parent != NULL)
-        {
-            if ((*root)->parent->left == (*root))
-                (*root)->parent->left = NULL;
-            if ((*root)->parent->right == (*root))
-                (*root)->parent->right = NULL;
-            (*root)->parent = NULL;
-        }
-        right = (*root)->n;
         free(*root);
-        return (right);
+        *root = NULL;
+        return (maxValue);
     }
 
-	left = binary_tree_height((*root)->left);
-	right = binary_tree_height((*root)->right);
+    (*root)->n = lastNode->n;
 
-    l = (*root)->left;
-    r = (*root)->right;
-
-    if (left > right)
-        node = l;
+    if (lastNode->parent->left == lastNode)
+        lastNode->parent->left = NULL;
     else
-        node = r;
+        lastNode->parent->right = NULL;
 
-    left = node->n;
-    node->n = (*root)->n;
-    (*root)->n = left;
+    free(lastNode);
 
-    return (heap_extract(&node));
+    heapifyDown(*root);
+    return (maxValue);
 }
