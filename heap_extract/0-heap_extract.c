@@ -9,9 +9,9 @@
  */
 void swap(heap_t *a, heap_t *b)
 {
-    int temp = a->n;
-    a->n = b->n;
-    b->n = temp;
+	int temp = a->n;
+	a->n = b->n;
+	b->n = temp;
 }
 
 /**
@@ -22,25 +22,25 @@ void swap(heap_t *a, heap_t *b)
  */
 heap_t *findLastNode(heap_t *root)
 {
-    heap_t *queue[100], *lastNode = NULL, *current;
-    int front = 0, rear = 0;
+	heap_t *queue[100], *lastNode = NULL, *current;
+	int front = 0, rear = 0;
 
-    if (!root)
-        return (NULL);
+	if (!root)
+		return (NULL);
 
-    queue[rear++] = root;
+	queue[rear++] = root;
 
-    while (front < rear)
-    {
-        current = queue[front++];
-        lastNode = current;
+	while (front < rear)
+	{
+		current = queue[front++];
+		lastNode = current;
 
-        if (current->left)
-            queue[rear++] = current->left;
-        if (current->right)
-            queue[rear++] = current->right;
-    }
-    return (lastNode);
+		if (current->left)
+			queue[rear++] = current->left;
+		if (current->right)
+			queue[rear++] = current->right;
+	}
+	return (lastNode);
 }
 
 /**
@@ -49,22 +49,22 @@ heap_t *findLastNode(heap_t *root)
  */
 void heapifyDown(heap_t *node)
 {
-    heap_t *largest = node;
+	heap_t *largest = node;
 
-    if (!node)
-        return;
+	if (!node)
+		return;
 
-    if (node->left && node->left->n > largest->n)
-        largest = node->left;
+	if (node->left && node->left->n > largest->n)
+		largest = node->left;
 
-    if (node->right && node->right->n > largest->n)
-        largest = node->right;
+	if (node->right && node->right->n > largest->n)
+		largest = node->right;
 
-    if (largest != node)
-    {
-        swap(node, largest);
-        heapifyDown(largest);
-    }
+	if (largest != node)
+	{
+		swap(node, largest);
+		heapifyDown(largest);
+	}
 }
 
 /**
@@ -75,34 +75,34 @@ void heapifyDown(heap_t *node)
  */
 int heap_extract(heap_t **root)
 {
-    int maxValue;
-    heap_t *lastNode;
+	int maxValue;
+	heap_t *lastNode;
 
-    if (!(*root))
-        return (0);
+	if (!(*root))
+		return (0);
 
-    lastNode = findLastNode(*root);
-    if (!lastNode)
-        return (0);
+	lastNode = findLastNode(*root);
+	if (!lastNode)
+		return (0);
 
-    maxValue = (*root)->n;
+	maxValue = (*root)->n;
 
-    if (*root == lastNode)
-    {
-        free(*root);
-        *root = NULL;
-        return (maxValue);
-    }
+	if (*root == lastNode)
+	{
+		free(*root);
+		*root = NULL;
+		return (maxValue);
+	}
 
-    (*root)->n = lastNode->n;
+	(*root)->n = lastNode->n;
 
-    if (lastNode->parent->left == lastNode)
-        lastNode->parent->left = NULL;
-    else
-        lastNode->parent->right = NULL;
+	if (lastNode->parent->left == lastNode)
+		lastNode->parent->left = NULL;
+	else
+		lastNode->parent->right = NULL;
 
-    free(lastNode);
+	free(lastNode);
 
-    heapifyDown(*root);
-    return (maxValue);
+	heapifyDown(*root);
+	return (maxValue);
 }
