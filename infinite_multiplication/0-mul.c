@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+int _putchar(char c);
 
 int my_strlen(const char *str)
 {
@@ -9,42 +12,13 @@ int my_strlen(const char *str)
 
     return length;
 }
-void append_char_to_file(char ch)
-{
-    FILE *file = fopen("dump.txt", "a"); // Open file in append mode
-    if (file == NULL) {
-        perror("Failed to open file");
-        return;
-    }
-    
-    fputc(ch, file); // Write the character to the file
-    fclose(file); // Close the file
-}
-void print_file_in_reverse() {
-    FILE *file = fopen("dump.txt", "r"); // Open the file in read mode
-    if (file == NULL) {
-        perror("Failed to open file");
-        return;
-    }
-
-    // Move to the end of the file
-    fseek(file, 0, SEEK_END);
-    long fileSize = ftell(file); // Get the size of the file
-
-    // Read and print in reverse
-    for (long i = fileSize - 1; i >= 0; i--) {
-        fseek(file, i, SEEK_SET); // Move to the i-th character
-        int ch = fgetc(file); // Read the character
-        putchar(ch); // Print the character
-    }
-
-    fclose(file); // Close the file
-}
 
 
 int main(int argc, char *argv[])
 {
-    int i, j, sum, indexA, indexB, memo = 0;
+    int i, j, indexA, indexB, memo = 0;
+    long long sum;
+    char *result;
 
     if (argc < 3)
     {
@@ -55,7 +29,10 @@ int main(int argc, char *argv[])
     int lenA = my_strlen(argv[1]);
     int lenB = my_strlen(argv[2]);
 
-    append_char_to_file('\n');
+    result = malloc(lenA + lenB + 2);
+    for (i = 0; i < lenA + lenB + 2; i++)
+        result[i] = '0';
+    result[lenA + lenB + 1] = '\0';
 
     for (i = 0; i < lenB + lenB; i++)
     {
@@ -67,14 +44,19 @@ int main(int argc, char *argv[])
             if (indexA < lenA && indexA >= 0)
             {
                 sum += (argv[2][indexB] - '0') * (argv[1][indexA] - '0');
-                //printf("%d %d: %d * %d = %d\n", indexA, indexB, argv[2][indexB] - '0', argv[1][indexA] - '0', (argv[2][indexB] - '0') * (argv[1][indexA] - '0'));
             }
         }
         if (sum + memo > 0)
-            append_char_to_file((sum + memo)%10 + '0');
+            result[lenA + lenB - i] = (sum + memo) % 10 + '0';
         memo = (sum + memo - ((sum + memo)%10))/10;
     }
-    print_file_in_reverse();
+    for (i = 0; result[i] == '0'; )
+        i++;
+    for (; result[i] != '\0'; i++)
+        _putchar(result[i]);
+    _putchar('\n');
+    
+    free(result);
 
     return 0;
 }
