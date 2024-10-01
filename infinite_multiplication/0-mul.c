@@ -13,11 +13,22 @@ int my_strlen(const char *str)
     return length;
 }
 
+void recursive_carry(char *num, int index, int carry)
+{
+    if (carry == 0 || index < 0)
+        return; 
+
+    int sum = (num[index] - '0') + carry;
+    num[index] = (sum % 10) + '0';
+    carry = sum / 10;
+
+    recursive_carry(num, index - 1, carry);
+}
+
 
 int main(int argc, char *argv[])
 {
-    int i, j, indexA, indexB, memo = 0;
-    long long sum;
+    int i, j, indexA, indexB;
     char *result;
 
     if (argc < 3)
@@ -34,21 +45,15 @@ int main(int argc, char *argv[])
         result[i] = '0';
     result[lenA + lenB + 1] = '\0';
 
-    for (i = 0; i < lenB + lenB; i++)
+    for (i = 0; i < lenA; i++)
     {
-        sum = 0;
-        for (j = 0; j < lenA; j++)
+        indexA = lenA - i - 1;
+        for (j = 0; j < lenB; j++)
         {
             indexB = lenB - j - 1;
-            indexA = (lenA - i - 1) + j;
-            if (indexA < lenA && indexA >= 0)
-            {
-                sum += (argv[2][indexB] - '0') * (argv[1][indexA] - '0');
-            }
+            recursive_carry(result, lenA + lenB - j - i, (argv[2][indexB] - '0') * (argv[1][indexA] - '0'));
+
         }
-        if (sum + memo > 0)
-            result[lenA + lenB - i] = (sum + memo) % 10 + '0';
-        memo = (sum + memo - ((sum + memo)%10))/10;
     }
     for (i = 0; result[i] == '0'; )
         i++;
