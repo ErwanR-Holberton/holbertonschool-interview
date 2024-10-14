@@ -44,7 +44,7 @@ void TopDownMergeSort(int A[], int iBegin, int iEnd)
 	printf("[right]: ");
 	print_array(&A[iMiddle], iEnd - iMiddle);
 	InPlaceMerge(A, iBegin, iMiddle, iEnd);
-
+	printf("[Done]: ");
 	print_array(A + iBegin, iEnd - iBegin);
 }
 /**
