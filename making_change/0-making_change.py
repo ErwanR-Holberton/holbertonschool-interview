@@ -1,20 +1,13 @@
 #!/usr/bin/python3
 """make change"""
 
+
 def makeChange(coins, total):
-    """make change"""
     if total <= 0:
         return 0
-    mini = -1
-    for c in coins:
-        amount = total // c
-        if c * amount == total:
-            if mini == -1 or mini > amount:
-                mini = amount
-        else:
-            if amount != 0:
-                f = makeChange(coins, total - (c * amount))
-                if f != -1:
-                    if mini == -1 or mini > f:
-                        mini = f + amount
-    return mini
+    dp = [float('inf')] * (total + 1)
+    dp[0] = 0
+    for coin in coins:
+        for i in range(coin, total + 1):
+            dp[i] = min(dp[i], dp[i - coin] + 1)
+    return dp[total] if dp[total] != float('inf') else -1
