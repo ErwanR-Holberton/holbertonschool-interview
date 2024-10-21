@@ -1,6 +1,8 @@
 #!/usr/bin/python3
+"""make change"""
 
 def makeChange(coins, total):
+    """make change"""
     mini = -1
     for c in coins:
         amount = total // c
