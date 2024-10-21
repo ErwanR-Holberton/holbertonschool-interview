@@ -3,6 +3,8 @@
 
 def makeChange(coins, total):
     """make change"""
+    if total <= 0:
+        return 0
     mini = -1
     for c in coins:
         amount = total // c
