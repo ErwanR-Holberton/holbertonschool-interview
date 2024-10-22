@@ -16,7 +16,7 @@ int my_strlen(const char *str)
 void recursive_carry(char *num, int index, int carry)
 {
     if (carry == 0 || index < 0)
-        return; 
+        return;
 
     int sum = (num[index] - '0') + carry;
     num[index] = (sum % 10) + '0';
@@ -25,16 +25,29 @@ void recursive_carry(char *num, int index, int carry)
     recursive_carry(num, index - 1, carry);
 }
 
+int verify(char *number)
+{
+    int length = 0;
+
+    while (number[length] != '\0')
+    {
+        if (number[length] < '0' || number[length] > '9')
+            return (1);
+        length++;
+    }
+    return (0);
+}
+
 
 int main(int argc, char *argv[])
 {
     int i, j, indexA, indexB;
     char *result;
 
-    if (argc < 3)
+    if (argc < 3 || verify(argv[1]) || verify(argv[2]))
     {
-        printf("Usage: %s <arg1> <arg2>\n", argv[0]);
-        return 1;
+        printf("Error\n");
+        return 98;
     }
 
     int lenA = my_strlen(argv[1]);
@@ -60,7 +73,7 @@ int main(int argc, char *argv[])
     for (; result[i] != '\0'; i++)
         _putchar(result[i]);
     _putchar('\n');
-    
+
     free(result);
 
     return 0;
