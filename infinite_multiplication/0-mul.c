@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     int i, j, indexA, indexB;
     char *result;
 
-    if (argc < 3 || verify(argv[1]) || verify(argv[2]))
+    if (argc != 3 || verify(argv[1]) || verify(argv[2]))
     {
         printf("Error\n");
         return 98;
