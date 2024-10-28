@@ -12,14 +12,14 @@ void print_list2(List *list)
     printf("myprint %d\n", ' ');
     while (tmp)
     {
-        printf("%s\n", tmp->str);
+        printf("%s %d\n", tmp->str, ' ');
         printf("\t->prev: %s\n", tmp->prev ? tmp->prev->str : "NULL");
         printf("\t->next: %s\n", tmp->next ? tmp->next->str : "NULL");
         tmp = tmp->next;
         if (tmp == list)
             break;
     }
-    printf("-------\n");
+    printf("-------%d\n", ' ');
 }
 
 int mylen(List **list)
