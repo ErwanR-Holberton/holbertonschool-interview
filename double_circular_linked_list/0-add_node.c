@@ -4,6 +4,21 @@
 #include <string.h>
 #include <stdio.h>
 
+int mylen(List **list)
+{
+	List *start = *list, *temp = start;
+	int length = 0;
+
+	if (start == NULL)
+		return 0;
+	while (temp->next != NULL && temp->next != start)
+	{
+		length++;
+		temp = temp->next;
+	}
+	return length;
+}
+
 List *add_node_end(List **list, char *str)
 {
 	List *new;
@@ -40,5 +55,8 @@ List *add_node_end(List **list, char *str)
 }
 List *add_node_begin(List **list, char *str)
 {
+	int L = mylen(list);
+	if (L == 1)
+		printf("%d\n", L);
 	return (add_node_end(list, str));
 }
