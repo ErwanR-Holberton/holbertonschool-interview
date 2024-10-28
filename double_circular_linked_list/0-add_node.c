@@ -9,7 +9,7 @@ void print_list2(List *list)
     List *tmp;
 
     tmp = list;
-    printf("myprint\n");
+    printf("myprint %d\n", ' ');
     while (tmp)
     {
         printf("%s\n", tmp->str);
