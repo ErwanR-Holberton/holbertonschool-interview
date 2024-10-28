@@ -4,23 +4,6 @@
 #include <string.h>
 #include <stdio.h>
 
-void print_list2(List *list)
-{
-    List *tmp;
-
-    tmp = list;
-    printf("myprint %d\n", ' ');
-    while (tmp)
-    {
-        printf("%s %d\n", tmp->str, ' ');
-        printf("\t->prev: %s\n", tmp->prev ? tmp->prev->str : "NULL");
-        printf("\t->next: %s\n", tmp->next ? tmp->next->str : "NULL");
-        tmp = tmp->next;
-        if (tmp == list)
-            break;
-    }
-    printf("-------%d\n", ' ');
-}
 
 int mylen(List **list)
 {
@@ -73,11 +56,8 @@ List *add_node_end(List **list, char *str)
 }
 List *add_node_begin(List **list, char *str)
 {
-	int L = mylen(list);
-	if (L == 1)
-	{
-		printf("%d\n", L);
-		print_list2(*list);
-	}
-	return (add_node_end(list, str));
+	List *new;
+	new = add_node_end(list, str);
+	*list = new;
+	return (new);
 }
