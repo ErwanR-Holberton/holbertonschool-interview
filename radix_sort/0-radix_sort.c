@@ -1,6 +1,5 @@
 #include "sort.h"
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
 
 /**
@@ -11,9 +10,15 @@
  */
 int countDigits(int n)
 {
+	int i = 1, count = 1;
 	if (n == 0)
 		return (1); /* Special case: 0 has 1 digit */
-	return ((int)log10(n) + 1);
+	while (n / i > 10)
+	{
+		i = i * 10;
+		count++;
+	}
+	return (count);
 }
 
 /**
