@@ -75,7 +75,7 @@ void radix_sort(int *array, size_t size)
 {
 	int max, i, exp = 1;
 
-	if (!array || size <= 0)
+	if (!array || size <= 1)
 		return;
 
 	/* Find the maximum number to know the number of digits */
