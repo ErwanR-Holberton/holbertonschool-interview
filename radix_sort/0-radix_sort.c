@@ -11,6 +11,7 @@
 int countDigits(int n)
 {
 	int i = 1, count = 1;
+
 	if (n == 0)
 		return (1); /* Special case: 0 has 1 digit */
 	while (n / i >= 10)
