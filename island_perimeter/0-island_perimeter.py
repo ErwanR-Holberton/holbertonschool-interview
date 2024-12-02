@@ -4,6 +4,8 @@
 
 def safe_get_2d(array, row, col, default=0):
     """get 1 if water 0 for land ignore out of bounds"""
+    if row == -1 or col == -1:
+        return 1
     try:
         return 1 - array[row][col]
     except IndexError:
