@@ -7,7 +7,7 @@ def safe_get_2d(array, row, col, default=0):
     try:
         return 1 - array[row][col]
     except IndexError:
-        return default
+        return 1
 
 def island_perimeter(grid):
     """find perimeter of island"""
