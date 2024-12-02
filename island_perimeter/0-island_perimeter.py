@@ -11,6 +11,7 @@ def safe_get_2d(array, row, col, default=0):
     except IndexError:
         return 1
 
+
 def island_perimeter(grid):
     """find perimeter of island"""
     perimeter = 0
