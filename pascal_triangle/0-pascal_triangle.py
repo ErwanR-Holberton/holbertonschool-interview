@@ -1,4 +1,9 @@
+#!/usr/bin/python3
+"""return a 2d array representing pascal triangle"""
+
+
 def pascal_triangle(n):
+    """return a 2d array representing pascal triangle"""
     array = []
     for i in range(n):
         array.append([1])
