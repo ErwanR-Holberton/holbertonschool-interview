@@ -45,39 +45,3 @@ int regex_match(char const *str, char const *pattern)
 
 	return (0);
 }
-/*
-
-
-	if (pattern[0] != '.' && pattern[1] != '*' && str[0] != pattern[0] &&)
-	{
-		printf("0\n");
-		return (0);
-	}
-
-	if (str[0] == '\0' && pattern[0] == '\0')
-		return (1);
-
-	if (pattern[0] == '.' && str[0] == '\0')
-		return (0);
-
-	if (pattern[0] == '.' && pattern[1] != '*')
-		return (regex_match(&str[1], &pattern[1]));
-
-	if (pattern[0] == '.' && pattern[1] == '*')
-		return (regex_match(&str[1], &pattern[0]) ||
-			regex_match(&str[1], &pattern[2]) ||
-			regex_match(&str[0], &pattern[2]));
-
-	if (str[0] == pattern[0] && pattern[1] != '*')
-		return (regex_match(&str[1], &pattern[1]));
-
-	if (str[0] == pattern[0] && pattern[1] == '*')
-		return (regex_match(&str[0], &pattern[2]) ||
-			regex_match(&str[1], &pattern[2]) ||
-			regex_match(&str[1], &pattern[0]));
-
-	if (str[0] != pattern[0])
-		return (regex_match(&str[0], &pattern[2]));
-
-
-*/
