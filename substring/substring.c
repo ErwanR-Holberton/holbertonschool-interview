@@ -14,7 +14,7 @@
 char const **copy_array(char const **words, int nb_words, int index_to_skip)
 {
 	int k, index = 0;
-	char **const remaining_words = malloc((nb_words - 1) * sizeof(char *));
+	char const **remaining_words = malloc((nb_words - 1) * sizeof(char *));
 
 	for (k = 0; k < nb_words - 1; k++)
 	{
