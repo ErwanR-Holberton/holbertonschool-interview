@@ -11,10 +11,10 @@
  *
  * Return: A new array of strings with one index skipped.
  */
-char const **copy_array(char const **words, int nb_words, int index_to_skip)
+char **copy_array(char const **words, int nb_words, int index_to_skip)
 {
 	int k, index = 0;
-	char const **remaining_words = malloc((nb_words - 1) * sizeof(char *));
+	char **remaining_words = malloc((nb_words - 1) * sizeof(char *));
 
 	for (k = 0; k < nb_words - 1; k++)
 	{
@@ -27,6 +27,22 @@ char const **copy_array(char const **words, int nb_words, int index_to_skip)
 }
 
 /**
+ * free_array - free an array of strings.
+ * @words: The original array of strings.
+ * @nb_words: The number of strings in the array.
+ *
+ * Return: nothing
+ */
+void free_array(char **words, int nb_words)
+{
+	int i;
+
+	for (i = 0; i < nb_words; i++)
+		free(words[i]);
+	free(words);
+}
+
+/**
  * continue_words - Recursively checks if a string contains words in any order.
  * @s: The string to check.
  * @words: The array of words to find.
@@ -36,20 +52,24 @@ char const **copy_array(char const **words, int nb_words, int index_to_skip)
  */
 int continue_words(char const *s, char const **words, int nb_words)
 {
-	int j, word_len;
-	char const **remaining_words;
+	int j, lengh;
+	char **words2;
 
 	if (nb_words == 0)
 		return (1);
 
 	for (j = 0; j != nb_words; j++)
 	{
-		word_len = strlen(words[j]);
-		if (strncmp(s, words[j], word_len) == 0)
+		lengh = strlen(words[j]);
+		if (strncmp(s, words[j], lengh) == 0)
 		{
-			remaining_words = copy_array(words, nb_words, j);
-			if (continue_words(&s[word_len], remaining_words, nb_words - 1))
+			words2 = copy_array(words, nb_words, j);
+			if (continue_words(&s[lengh], (char const **) words2, nb_words - 1))
+			{
+				free_array(words2, nb_words - 1);
 				return (1);
+			}
+			free_array(words2, nb_words - 1);
 		}
 	}
 	return (0);
