@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 def isWinner(x, nums):
     ben = sum(how_many_primes(n) % 2 == 0 for n in nums)
     return None if ben == x - ben else ("Maria" if ben < x - ben else "Ben")
